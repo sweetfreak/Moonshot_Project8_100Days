@@ -16,7 +16,7 @@ struct AstronautView: View {
     
     
     var body: some View {
-        NavigationStack {
+        //NavigationStack {
             ScrollView {
                 VStack {
                     Image(astronaut.id)
@@ -32,10 +32,10 @@ struct AstronautView: View {
                 
                 HStack {
                     ForEach(missionList) { mission in
-                        NavigationLink {
-                            MissionView(mission: mission, astronauts: astronauts)
-                            //NOTE ^^ THIS COULD LEAD TO A FOREVER LOOP where the user never goes back to the main menu
-                        } label: {
+                        NavigationLink(value: mission) {
+                            //MissionView(mission: mission, astronauts: astronauts)
+//                            //NOTE ^^ THIS COULD LEAD TO A FOREVER LOOP where the user never goes back to the main menu
+//                        } label: {
                             VStack {
                                 Image(mission.image)
                                     .resizable()
@@ -64,6 +64,9 @@ struct AstronautView: View {
                                     .stroke(.lightBackground)
                             )
                         }
+                        .navigationDestination(for: Mission.self ) { mission in
+                            MissionView(mission: mission, astronauts: astronauts)
+                        }
                     }
                 }
                 
@@ -71,10 +74,8 @@ struct AstronautView: View {
             .background(.darkBackground)
             .navigationTitle(astronaut.name)
             .navigationBarTitleDisplayMode(.inline)
-        }
-        .onAppear(perform: findMissions)
-
-        
+      //  }
+            .onAppear(perform: findMissions)
     }
         
     

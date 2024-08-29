@@ -31,9 +31,7 @@ struct ContentView: View {
                 
                 LazyVGrid(columns: columns) {
                     ForEach(missions) { mission in
-                        NavigationLink {
-                            MissionView(mission: mission, astronauts: astronauts)
-                        } label: {
+                        NavigationLink(value: mission) {
                             VStack {
                                 Image(mission.image)
                                     .resizable()
@@ -62,6 +60,9 @@ struct ContentView: View {
                                     .stroke(.lightBackground)
                             )
                         }
+                        .navigationDestination(for: Mission.self ) { mission in
+                            MissionView(mission: mission, astronauts: astronauts)
+                        }
                     }
                 }
                 .padding([.horizontal, .bottom])
@@ -74,33 +75,37 @@ struct ContentView: View {
                     ForEach(Array(astronauts.keys), id: \.self) { key in
                         if let astronaut = astronauts[key] {
                          
-                        NavigationLink {
-                            AstronautView(astronaut: astronaut)
-                        } label: {
-                            VStack {
-                                Image(astronaut.id)
-                                    .resizable()
-                                    .scaledToFit()
+                            NavigationLink(value: astronaut) {
+                                //                            AstronautView(astronaut: astronaut)
+                                //                        } label: {
+                                VStack {
+                                    Image(astronaut.id)
+                                        .resizable()
+                                        .scaledToFit()
                                     //.frame(width: 100, height: 100)
                                     //.padding()
-                                    .clipShape(.rect(cornerRadius: 10))
-                                
-                                VStack {
-                                    Text(astronaut.name)
-                                        .font(.headline)
-                                        .foregroundStyle(.white)
+                                        .clipShape(.rect(cornerRadius: 10))
+                                    
+                                    VStack {
+                                        Text(astronaut.name)
+                                            .font(.headline)
+                                            .foregroundStyle(.white)
+                                        
+                                    }
+                                    .padding(.vertical)
+                                    .frame(maxWidth: .infinity)
+                                    .background(.lightBackground)
                                     
                                 }
-                                .padding(.vertical)
-                                .frame(maxWidth: .infinity)
-                                .background(.lightBackground)
-                                
+                                .clipShape(.rect(cornerRadius: 10))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(.lightBackground)
+                                )
                             }
-                            .clipShape(.rect(cornerRadius: 10))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(.lightBackground)
-                            )}
+                            .navigationDestination(for: Astronaut.self ) { astronaut in
+                                AstronautView(astronaut: astronaut)
+                            }
                         }
                     }
                 }
@@ -122,18 +127,6 @@ struct ContentView: View {
         }
         
     }
-    
-//    init(astronauts: [String: Astronaut]) {
-//        self.mission = mission
-//        
-//        self.crew = mission.crew.map { member in
-//            if let astronaut = astronauts[member.name] {
-//                return CrewMember(role: member.role, astronaut: astronaut)
-//            } else {
-//                fatalError("Missing \(member.name)")
-//            }
-//        }
-//    }
 }
 
 // //FOR: Scrollview/LazyVStack EXPLAINATION
