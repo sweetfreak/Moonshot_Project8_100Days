@@ -34,6 +34,7 @@ struct ContentListView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .scrollContentBackground(.hidden)
                         .background(.lightBackground)
+                        .accessibilityElement(children: .combine)
                     }
                     .clipShape(.rect(cornerRadius: 10))
                     .listRowBackground(Color.darkBackground)

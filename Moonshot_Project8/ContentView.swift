@@ -38,6 +38,8 @@ struct ContentView: View {
                                     .scaledToFit()
                                     .frame(width: 100, height: 100)
                                     .padding()
+                                    .accessibilityLabel("The mission badge for \(mission.displayName)")
+                                //This is FINE but not great - it would be better to descripe each badge, add it to the JSON, and then have it read out the badge description and have the label just be "mission.badgeDescription" or whatever.
                                 
                                 VStack {
                                     Text(mission.displayName)
@@ -52,6 +54,8 @@ struct ContentView: View {
                                 .padding(.vertical)
                                 .frame(maxWidth: .infinity)
                                 .background(.lightBackground)
+                                .accessibilityElement(children: .combine)
+
                                 
                             }
                             .clipShape(.rect(cornerRadius: 10))
@@ -85,6 +89,7 @@ struct ContentView: View {
                                     //.frame(width: 100, height: 100)
                                     //.padding()
                                         .clipShape(.rect(cornerRadius: 10))
+                                        .accessibilityHidden(true)
                                     
                                     VStack {
                                         Text(astronaut.name)

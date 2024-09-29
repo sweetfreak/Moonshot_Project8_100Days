@@ -12,6 +12,7 @@ struct AstronautView: View {
     let astronaut: Astronaut
     let missions: [Mission] = Bundle.main.decode("missions.json")
     let astronauts: [String: Astronaut] = Bundle.main.decode("astronauts.json")
+    
     @State private var missionList: [Mission] = []
     
     
@@ -22,7 +23,9 @@ struct AstronautView: View {
                     Image(astronaut.id)
                         .resizable()
                         .scaledToFit()
-                        
+                        .accessibilityElement(.ignore)
+                        .accessibilityLabel("\(astronaut.name) in a spacesuit )")
+
                         .containerRelativeFrame(.horizontal) { size, axis in
                             size * 0.8 //that's 0.8 of the horizontal axis, in this scenario
                         }
@@ -42,7 +45,7 @@ struct AstronautView: View {
                                     .scaledToFit()
                                     .frame(width: 100, height: 100)
                                     .padding()
-                                
+
                                 VStack {
                                     Text(mission.displayName)
                                         .font(.headline)
